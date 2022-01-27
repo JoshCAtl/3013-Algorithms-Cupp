@@ -18,7 +18,7 @@
 //////////////////////////////////////////////////////////
 #include <iostream>
 #include <fstream>
-#include <iomanip>
+#include <string>
 
 using namespace std;
 
@@ -73,6 +73,12 @@ public:
         size = 10;
         A = new int[size];
         top = -1;
+        tooFull = 0.85;
+        tooEmpty = 0.15;
+        Enlarge = 2;
+        Shrink = 0.5;
+        commands = 0; 
+        resizeCount = 0; 
     }
 
     /**
@@ -87,12 +93,16 @@ public:
   * Returns:
   *     - NULL
   */
-    ArrayStack(int s) {
-        size = s;
-        A = new int[s];
-        top = -1;
-      
-    }
+    ArrayStack(double full, double empty, double enlarge, double shrink){
+    size = 10;
+    A = new int[size];
+    top = -1;
+    tooFull = full;
+    tooEmpty = empty;
+    Enlarge = enlarge;
+    Shrink = shrink;
+    
+  }
 
     /**
   * Public bool: Empty
@@ -146,8 +156,9 @@ public:
     int Pop() {
 
         checkResize();
+        commands++;
         if (!Empty()) {
-            commands++;
+            
             return A[top--];
         }
 
@@ -162,31 +173,31 @@ public:
   *      Prints stack to standard out
   * 
   * Params:
-  *      ofstream outfile
+  *      NULL
   * 
   * Returns:
   *      NULL
   */
-    void Print(ofstream& outfile) {
-        outfile << "#################################################" << endl;
+    void Print() {
+        cout << "#################################################" << endl;
 
-        outfile << " Assignment 4 - Resizing the Stack\n";
-        outfile << " CMPS 3013\n";
-        outfile << " Josh Cupp\n\n";
+        cout << " Assignment 4 - Resizing the Stack\n";
+        cout << " CMPS 3013\n";
+        cout << " Josh Cupp\n\n";
 
-        outfile << "Config Params:\n";
-        outfile << " Full Threshold: " << tooFull << endl;
-        outfile << " Shrink Threshold: " << tooEmpty <<     endl;
-        outfile << " Grow Ratio: " << Enlarge << endl;
-        outfile << " Shrink Ratio: " << Shrink << endl;
-        outfile << endl;
+        cout << "Config Params:\n";
+        cout << " Full Threshold: " << tooFull << endl;
+        cout << " Shrink Threshold: " << tooEmpty <<     endl;
+        cout << " Grow Ratio: " << Enlarge << endl;
+        cout << " Shrink Ratio: " << Shrink << endl;
+        cout << endl;
 
-        outfile << "Processed " << commands <<  " commands" << endl << endl;
+        cout << "Processed " << commands <<  " commands" << endl << endl;
 
-        outfile << "Max Stack Size: " << maxSize << endl;
-        outfile << "End Stack Size: " << size << endl;
-        outfile << "Stack Resized: " <<  resizeCount <<   " times" << endl;
-        outfile << "#################################################" << endl;
+        cout << "Max Stack Size: " << maxSize << endl;
+        cout << "End Stack Size: " << size << endl;
+        cout << "Stack Resized: " <<  resizeCount <<   " times" << endl;
+        cout << "#################################################" << endl;
 
 
     }
@@ -308,7 +319,6 @@ public:
           resizeCount++;
         }
     }
-};
 
 /**
   * Function: checkEvenOdd
@@ -325,62 +335,7 @@ public:
   * Returns:
   *      NULL
   */
-void checkEvenOdd(ArrayStack &Stack,int num);
-
-/**
-  * Function: openFiles
-  * 
-  * Description:
-  *      opens input and output files
-  *       
-  * Params:
-  *      ifstream
-  *      ofstream
-  *      
-  * 
-  * Returns:
-  *      NULL
-  */
-void openFiles(ifstream& infile, ofstream& outfile);
-
-// MAIN DRIVER
-// Simple Array Based Stack Usage:
-int main() {
-    ifstream infile;
-	  ofstream outfile;
-
-    openFiles(infile, outfile);
-    
-    ArrayStack stack;
-    int num; 
-
-    while (!infile.eof()){
-        infile >> num; // read in from infile
-        checkEvenOdd(stack,num);
-        
-    }
-    stack.Print(outfile);
-}
-
-
-void openFiles(ifstream& infile, ofstream& outfile)
-{
-
-	char inFileName[40];
-	char outFileName[40];
-
-
-	cout << "Enter the input file name: ";
-	cin >> inFileName;
-	infile.open(inFileName);
-	cout << endl;
-
-	cout << "Enter the output file name: ";
-	cin >> outFileName;
-	outfile.open(outFileName);
-}
-
-void checkEvenOdd(ArrayStack &Stack,int num)
+  void checkEvenOdd(ArrayStack &Stack,int num)
 {
   // checks if number is even
   if(num % 2 == 0){
@@ -388,4 +343,46 @@ void checkEvenOdd(ArrayStack &Stack,int num)
   }
   else
     Stack.Pop();
+}
+
+};
+
+
+
+
+
+// MAIN DRIVER
+// Simple Array Based Stack Usage:
+int main(int argc, char** argv) {
+    ifstream infile;
+	  string inputFileName = "test_nums.dat";
+    infile.open(inputFileName);
+
+
+   double tooBig = 0.8;
+   double tooSmall = 0.25;
+   double growScale = 1.5;
+   double shrinkScale = 0.5;
+   
+   if(argc>1){
+    //initialization of command line params
+    tooBig = atof(argv[1]);
+    tooSmall = atof(argv[2]);
+    growScale = atof(argv[3]);
+    shrinkScale = atof(argv[4]);
+    inputFileName = string(argv[5]);
+   }
+    
+    ArrayStack stack;
+    int num; 
+   
+    
+   
+
+    while (!infile.eof()){
+        infile >> num; // read in from infile
+        stack.checkEvenOdd(stack,num);
+        
+    }
+    stack.Print();
 }
