@@ -5,3 +5,4 @@
 | 3 |[mygetch.hpp](https://github.com/JoshCAtl/3013-Algorithms-Cupp/blob/main/Assignments/P03/mygetch.hpp)|get character file
 | 4 |[termcolor.hpp](https://github.com/JoshCAtl/3013-Algorithms-Cupp/blob/main/Assignments/P03/termcolor.hpp)|changes colors
 | 5 |[timer.hpp](https://github.com/JoshCAtl/3013-Algorithms-Cupp/blob/main/Assignments/P03/timer.hpp)|timer 
+| 6 |[dictionary.txt](https://github.com/JoshCAtl/3013-Algorithms-Cupp/blob/main/Assignments/P03/dictionary.txt)|dictionary
