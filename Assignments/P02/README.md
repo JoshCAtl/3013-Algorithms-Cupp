@@ -6,4 +6,4 @@
 | 4 |[mygetch.hpp](https://github.com/JoshCAtl/3013-Algorithms-Cupp/blob/main/Assignments/P02/mygetch.hpp)|get character file
 | 5 |[termcolor.hpp](https://github.com/JoshCAtl/3013-Algorithms-Cupp/blob/main/Assignments/P02/termcolor.hpp)|changes colors
 | 6 |[timer.hpp](https://github.com/JoshCAtl/3013-Algorithms-Cupp/blob/main/Assignments/P02/termcolor.hpp)|timer 
-| 7 |[dictionary.txt]()|dictionary
+| 7 |[dictionary.txt](https://github.com/JoshCAtl/3013-Algorithms-Cupp/blob/main/Assignments/P02/dictionary.txt)|dictionary
